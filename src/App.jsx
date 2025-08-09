@@ -1,34 +1,58 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import Bg from "./components/Bg";
 import Header from "./components/Header";
 import Home from "./components/Home";
-import Intro from "./components/Intro";
-import Flex from "./components/Flex";
 import About from "./components/About";
 import Experience from "./components/Experience";
 import Projects from "./components/Projects";
 import Contact from "./components/Contacts";
 import Footer from "./components/Footer";
 import Skills from "./components/Skills";
-import Game from "./components/Game";
 
 function App() {
+  const [showSplash, setShowSplash] = useState(true);
+  const [darkMode, setDarkMode] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowSplash(false), 1200);
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    document.documentElement.setAttribute(
+      "data-theme",
+      darkMode ? "dark" : "light"
+    );
+  }, [darkMode]);
+
+  if (showSplash) {
+    return (
+      <div
+        className={`w-full h-screen flex items-center justify-center ${
+          darkMode ? "bg-[#1a1a1a] text-white" : "bg-[#f5f5f5] text-black"
+        } text-[2rem] md:text-[3rem] font-light tracking-wide`}
+      >
+        Atharv Tyagi Portfolio
+      </div>
+    );
+  }
+
   return (
     <>
-      <Bg />
-      <Header />
-      <main className="relative z-10">
-        <Home />
-        <Intro />
-        <Flex />
-        <About />
-        <Skills />
-        <Experience />
-        <Projects />
-        <Contact />
-        <Game />
-        <Footer />
-      </main>
+      <div className={darkMode ? "dark" : "light"}>
+        <Bg darkMode={darkMode} />
+        <Header darkMode={darkMode} setDarkMode={setDarkMode} />
+        <div className="pt-24">
+          <Home darkMode={darkMode} />
+          {/* Add other sections here like: */}
+          <About darkMode={darkMode} />
+          <Skills darkMode={darkMode} />
+          <Experience darkMode={darkMode} />
+          <Projects darkMode={darkMode} />
+          <Contact darkMode={darkMode} />
+          <Footer darkMode={darkMode} />
+        </div>
+      </div>
     </>
   );
 }

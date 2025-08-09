@@ -1,82 +1,118 @@
-import { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import "./header.css";
 
-const Header = () => {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [scrollingUp, setScrollingUp] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
+const menuItems = [
+  "Home",
+  "About",
+  "Skills",
+  "Experience",
+  "Projects",
+  "Contact",
+];
+
+const Header = ({ darkMode, setDarkMode }) => {
+  const [open, setOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      setScrollingUp(currentScrollY < lastScrollY);
-      setLastScrollY(currentScrollY);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [lastScrollY]);
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const handleItemClick = (id) => {
+    setOpen(false);
+    const target = document.getElementById(id.toLowerCase());
+    if (target) {
+      const flash = document.createElement("div");
+      flash.className = `fast-forward-flash`;
+      document.body.appendChild(flash);
+      setTimeout(() => {
+        flash.remove();
+        target.scrollIntoView({ behavior: "smooth" });
+      }, 300);
+    }
+  };
 
   return (
-    <header
-      className={`fixed w-full z-50 transition-transform duration-300 backdrop-blur-md bg-black/20 ${
-        scrollingUp ? "translate-y-0" : "-translate-y-full"
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-        <div className="text-white text-2xl font-serif">
-          <span className="font-bold">Anshuman</span>Mishra
-        </div>
+    <>
+      <div
+        className={`menu-button-container toggle ${
+          isMobile ? "mobile-toggle" : ""
+        }`}
+      >
+        <button
+          onClick={() => setDarkMode(!darkMode)}
+          className={`menu-circle small ${darkMode ? "dark" : ""}`}
+        >
+          {darkMode ? "☾" : "☀"}
+        </button>
+      </div>
 
-        <nav className="hidden md:flex gap-6 text-white">
-          {["Home", "About", "Experience", "Work", "Contact"].map((item) => (
-            <a
-              key={item}
-              href={`#${item.toLowerCase()}`}
-              className="relative group"
-            >
-              <span className="text-white">{item}</span>
-              <span className="absolute left-0 -bottom-1 h-[2px] w-0 bg-white transition-all duration-300 group-hover:w-full"></span>
-            </a>
-          ))}
-        </nav>
-
-        <div className="md:hidden text-white">
-          {menuOpen ? (
-            <X
-              size={28}
-              onClick={() => setMenuOpen(false)}
-              className="cursor-pointer"
-            />
-          ) : (
-            <Menu
-              size={28}
-              onClick={() => setMenuOpen(true)}
-              className="cursor-pointer"
-            />
-          )}
+      <div
+        className={`menu-button-container ${isMobile ? "mobile" : ""}`}
+        onClick={() => setOpen(!open)}
+      >
+        <div
+          className={`menu-circle ${open ? "open" : ""} ${
+            darkMode ? "dark" : ""
+          }`}
+        >
+          <div className="bar top-bar"></div>
+          <div className="bar mid-bar"></div>
+          <div className="bar bot-bar"></div>
         </div>
       </div>
 
-      {menuOpen && (
-        <div className="md:hidden absolute top-full w-full bg-black/70 backdrop-blur-lg py-6">
-          <div className="flex flex-col items-center space-y-4 text-white text-lg">
-            {["Home", "About", "Experience", "Projects", "Contact"].map(
-              (item) => (
-                <a
+      <AnimatePresence>
+        {!isMobile && open && (
+          <motion.div
+            className={`horizontal-menu ${darkMode ? "dark" : ""}`}
+            initial={{ width: 0, opacity: 0 }}
+            animate={{ width: "720px", opacity: 1 }}
+            exit={{ width: 0, opacity: 0 }}
+            transition={{ duration: 0.4 }}
+          >
+            <div className="menu-items">
+              {menuItems.map((item) => (
+                <div
                   key={item}
-                  href={`#${item.toLowerCase()}`}
-                  className="relative group"
-                  onClick={() => setMenuOpen(false)}
+                  className="menu-link"
+                  onClick={() => handleItemClick(item)}
                 >
-                  <span>{item}</span>
-                  <span className="absolute left-0 -bottom-1 h-[2px] w-0 bg-white transition-all duration-300 group-hover:w-full"></span>
-                </a>
-              )
-            )}
-          </div>
-        </div>
-      )}
-    </header>
+                  {item}
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {isMobile && open && (
+          <motion.div
+            className={`mobile-menu ${darkMode ? "dark" : ""}`}
+            initial={{ y: -100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: -100, opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <div className="menu-items mobile-items">
+              {menuItems.map((item) => (
+                <div
+                  key={item}
+                  className="menu-link"
+                  onClick={() => handleItemClick(item)}
+                >
+                  {item}
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 };
 

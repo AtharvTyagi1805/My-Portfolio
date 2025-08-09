@@ -1,0 +1,210 @@
+:root {
+  --text-light: #111;
+  --border-dark: #333;
+  --border-light: #aaa;
+}
+
+[data-theme="dark"] {
+  --text-light: #eee;
+  --border-dark: #eee;
+  --border-light: #444;
+}
+
+.about-wrapper {
+  background-color: var(--bg-light);
+  color: var(--text-light);
+}
+
+.text-outline {
+  color: transparent;
+  -webkit-text-stroke: 1px var(--text-light);
+  position: relative;
+  display: inline-block;
+}
+
+.hover-fill::before {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  transition: width 0.4s ease;
+  color: var(--text-light);
+  z-index: 1;
+}
+
+.text-outline:hover::before {
+  width: 100%;
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.8s ease;
+}
+
+.card-container {
+  perspective: 1500px;
+  width: 100%;
+  max-width: 800px;
+  position: relative;
+}
+
+.card {
+  background-color: var(--bg-light);
+  padding: 2rem;
+  border-radius: 20px;
+  border-top: 5px solid var(--border-dark);
+  border-left: 5px solid var(--border-dark);
+  border-bottom: 2px solid var(--border-light);
+  border-right: 2px solid var(--border-light);
+  transition: transform 0.8s;
+  backface-visibility: hidden;
+  position: absolute;
+  width: 100%;
+  overflow: visible;
+}
+
+.card.front {
+  z-index: 2;
+}
+
+.card.back {
+  transform: rotateY(180deg);
+}
+
+.card-container.flipped .front {
+  transform: rotateY(180deg);
+}
+
+.card-container.flipped .back {
+  transform: rotateY(0deg);
+  z-index: 3;
+}
+
+.flip-button {
+  background-color: var(--bg-light);
+  color: var(--text-light);
+  padding: 0.6rem 1rem;
+  border: 2px solid var(--text-light);
+  border-radius: 8px;
+  font-size: 1.5rem;
+  transition: all 0.3s;
+}
+
+.flip-button:hover {
+  background-color: var(--text-light);
+  color: var(--bg-light);
+}
+
+.about-timeline-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 3.5rem;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 1rem 0;
+}
+
+.about-timeline-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  position: relative;
+  width: 100%;
+}
+
+.about-timeline-time {
+  font-size: 0.9rem;
+  color: var(--border-dark);
+  min-width: 70px;
+  text-align: right;
+}
+
+.about-timeline-semester {
+  font-weight: 600;
+  color: var(--text-light);
+  position: relative;
+}
+
+.about-timeline-semester:hover {
+  text-decoration: underline;
+}
+
+.about-timeline-circle-group {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.about-timeline-circle {
+  width: 18px;
+  height: 18px;
+  background-color: var(--bg-light);
+  border: 3px solid var(--text-light);
+  border-radius: 50%;
+  z-index: 10;
+  transition: transform 0.3s ease;
+}
+
+.about-timeline-line {
+  width: 2px;
+  height: 60px;
+  background-color: var(--border-dark);
+  margin-top: 0.4rem;
+  z-index: 1;
+}
+
+.about-timeline-item.active:hover .about-timeline-circle {
+  transform: scale(1.4);
+}
+
+.about-timeline-item.disabled .about-timeline-circle {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.about-timeline-hover-card {
+  background-color: white;
+  position: absolute;
+  top: 0;
+  left: 140%;
+  transform: none;
+  border: 2px solid var(--text-light);
+  padding: 10px;
+  border-radius: 8px;
+  min-height: 250px;
+  max-width: 400px;
+  width: 350px;
+  white-space: normal;
+  word-break: normal;
+  line-height: 1.5;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease, max-width 0.4s ease;
+  pointer-events: none;
+  font-size: 0.875rem;
+  color: var(--text-light);
+  z-index: 99;
+  overflow-y: auto;
+  max-height: 80vh;
+  height: auto;
+  min-width: 120px;
+  text-align: left;
+}
+
+[data-theme="dark"] .about-timeline-hover-card {
+  background-color: #000000;
+}
+
+.about-timeline-item.active:hover .about-timeline-hover-card {
+  opacity: 1;
+  transform: scale(1.05);
+  max-width: 800px;
+}

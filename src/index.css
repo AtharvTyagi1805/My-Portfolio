@@ -4,18 +4,30 @@
 @tailwind components;
 @tailwind utilities;
 
-/* For underline animation */
-.underline-animation::after {
-  content: "";
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 0%;
-  height: 2px;
-  background-color: white;
-  transition: width 0.4s ease-in-out;
+html,
+body,
+#root {
+  background-color: transparent !important;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+canvas {
+  background-color: transparent !important;
 }
 
-.group:hover .underline-animation::after {
-  width: 100%;
+[data-theme="dark"] {
+  --bg: #121212;
+  --text: #e0e0e0;
+}
+
+[data-theme="light"] {
+  --bg: #ffffff;
+  --text: #000000;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }

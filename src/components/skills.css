@@ -1,0 +1,133 @@
+.category-card {
+  background-color: white;
+  border-left: 5px solid #4f46e5;
+  border-top: 5px solid #4f46e5;
+  border-right: 1px solid #e5e7eb;
+  border-bottom: 1px solid #e5e7eb;
+  min-width: 320px;
+}
+
+.dark .category-card {
+  background-color: #1e293b;
+  border-left: 5px solid #818cf8;
+  border-top: 5px solid #818cf8;
+  border-right: 1px solid #334155;
+  border-bottom: 1px solid #334155;
+}
+
+.category-fill-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 5;
+  pointer-events: none;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.inner-skill-flip-wrapper {
+  perspective: 1000px;
+  width: 120px;
+  height: 120px;
+}
+
+.inner-skill-flip-card {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transition: transform 0.6s ease;
+  transform-style: preserve-3d;
+}
+
+.inner-skill-flip-card.flipped {
+  transform: rotateY(180deg);
+}
+
+.inner-skill-front,
+.inner-skill-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.dark .inner-skill-front,
+.dark .inner-skill-back {
+  background-color: #1e293b;
+  border: 1px solid #334155;
+}
+
+.inner-skill-front {
+  z-index: 2;
+}
+
+.inner-skill-back {
+  transform: rotateY(180deg);
+}
+
+.loading-bar-outer {
+  position: relative;
+  width: 80%;
+  max-width: 400px;
+  height: 12px;
+  border: 1px solid #000;
+  border-radius: 6px;
+  background-color: #e5e5e5;
+  overflow: hidden;
+  margin-top: 8px;
+}
+
+.dark .loading-bar-outer {
+  background-color: #333;
+  border-color: #fff;
+}
+
+.loading-bar-fill {
+  height: 100%;
+  border-radius: 6px;
+  transition: width 1s ease-in-out;
+}
+
+.progress-label {
+  position: absolute;
+  top: -1.4rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #000;
+}
+
+.dark .progress-label {
+  color: #fff;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.hover-fill span::after {
+  content: attr(data-text);
+  display: block;
+  width: 0%;
+  height: 4px;
+  background-color: black;
+  transition: width 0.3s;
+}
+
+.hover-fill:hover span::after {
+  width: 100%;
+}
