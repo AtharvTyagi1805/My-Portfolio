@@ -40,7 +40,7 @@ const projectList = [
     ],
     journey: true,
     github: "http://github.com/AtharvTyagi1805/My-Portfolio",
-    demo: "https://example.com/demo1",
+    demo: "https://atharvtyagi1805.github.io/My-Portfolio/",
   },
   {
     id: 2,
