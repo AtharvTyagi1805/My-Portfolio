@@ -5,12 +5,11 @@ import { TypeAnimation } from "react-type-animation";
 import { FaInfinity } from "react-icons/fa";
 import { motion } from "framer-motion";
 import "./Home.css";
+import robotGLB from "../assets/robot_playground.glb";
 
 function Model() {
   const group = useRef();
-  const { scene, animations } = useGLTF(
-    "${import.meta.env.BASE_URL}robot_playground.glb"
-  );
+  const { scene, animations } = useGLTF(robotGLB);
   const { actions, names } = useAnimations(animations, group);
 
   useEffect(() => {
