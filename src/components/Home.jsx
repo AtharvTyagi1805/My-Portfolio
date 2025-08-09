@@ -8,7 +8,9 @@ import "./Home.css";
 
 function Model() {
   const group = useRef();
-  const { scene, animations } = useGLTF("/robot_playground.glb");
+  const { scene, animations } = useGLTF(
+    "${import.meta.env.BASE_URL}robot_playground.glb"
+  );
   const { actions, names } = useAnimations(animations, group);
 
   useEffect(() => {
