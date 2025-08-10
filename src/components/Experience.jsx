@@ -317,7 +317,7 @@ const Experience = () => {
               className="w-24 mx-auto mb-4"
             />
             <h2
-              className="text-2xl font-bold text-center hover-fill"
+              className="text-2xl font-bold text-center"
               data-text={selectedExp.company}
             >
               {selectedExp.company}

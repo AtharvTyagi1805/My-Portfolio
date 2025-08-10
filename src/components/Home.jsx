@@ -23,7 +23,7 @@ function Model() {
     });
 
     if (actions["Experiment"]) {
-      actions["Experiment"].reset().fadeIn(0.5).play();
+      actions["Experiment"].reset().fadeIn(0.05).play();
     } else {
       console.warn("Animation 'Experiment' not found. Available:", names);
     }

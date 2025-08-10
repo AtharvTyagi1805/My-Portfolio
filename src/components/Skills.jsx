@@ -88,15 +88,15 @@ const fadeInVariant = {
     opacity: 1,
     y: 0,
     transition: {
-      delay: i * 0.3 + 0.7,
-      duration: 0.6,
+      delay: i * 0.15,
+      duration: 0.5,
       ease: "easeOut",
     },
   }),
 };
 
 const Skills = () => {
-  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.2 });
+  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.05 });
   const [hoveredCard, setHoveredCard] = useState(null);
 
   return (
@@ -118,38 +118,20 @@ const Skills = () => {
 
       <div className="flex flex-col items-center w-full max-w-5xl gap-14">
         {Object.entries(skills).map(([category, techList], i) => (
-          <motion.div
-            key={category}
-            className="w-full flex flex-col items-center"
-            variants={fadeInVariant}
-            initial="hidden"
-            animate={inView ? "visible" : "hidden"}
-            custom={i + 1}
-          >
-            <h2 className="text-2xl font-semibold mb-4 text-center">
+          <div key={category} className="w-full flex flex-col items-center">
+            <motion.h2
+              className="text-2xl font-semibold mb-4 text-center"
+              variants={fadeInVariant}
+              initial="hidden"
+              animate={inView ? "visible" : "hidden"}
+              custom={i + 1}
+            >
               {category}
-            </h2>
+            </motion.h2>
 
             <div
-              className={`category-card group relative min-w-[320px] w-full max-w-6xl p-6 border-t-[5px] border-l-[5px] border-black dark:border-white rounded-3xl shadow-lg transition-colors duration-300 ${
-                hoveredCard?.category === category ? "hovered" : ""
-              }`}
+              className={`category-card group relative min-w-[320px] w-full max-w-6xl p-6 border-t-[5px] border-l-[5px] border-black dark:border-white rounded-3xl shadow-lg transition-colors duration-300`}
             >
-              {hoveredCard?.category === category && (
-                <div className="category-fill-overlay">
-                  <motion.div
-                    key={`${hoveredCard.category}-${hoveredCard.index}`}
-                    initial={{ width: 0 }}
-                    animate={{ width: `${hoveredCard.level}%` }}
-                    transition={{ duration: 1 }}
-                    className=""
-                    style={{
-                      backgroundColor: hoveredCard.color,
-                    }}
-                  />
-                </div>
-              )}
-
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-items-center z-10 relative">
                 {techList.map((tech, idx) => {
                   const isHovered =
@@ -157,9 +139,14 @@ const Skills = () => {
                     hoveredCard?.index === idx;
 
                   return (
-                    <div
+                    <motion.div
                       key={tech.name}
                       className="inner-skill-flip-wrapper"
+                      whileInView="visible"
+                      initial="hidden"
+                      variants={fadeInVariant}
+                      viewport={{ once: true, amount: 0.05 }}
+                      custom={idx}
                       onMouseEnter={() =>
                         setHoveredCard({
                           category,
@@ -179,6 +166,7 @@ const Skills = () => {
                           <img
                             src={tech.image}
                             alt={tech.name}
+                            loading="lazy"
                             className="w-16 h-16 mx-auto"
                           />
                           <p className="text-center mt-2 text-sm">
@@ -195,7 +183,8 @@ const Skills = () => {
                             <motion.div
                               key={`${tech.name}-fill`}
                               initial={{ width: 0 }}
-                              animate={{ width: `${tech.level}%` }}
+                              whileInView={{ width: `${tech.level}%` }}
+                              viewport={{ once: true }}
                               transition={{ duration: 1 }}
                               className="loading-bar-fill"
                               style={{
@@ -206,12 +195,12 @@ const Skills = () => {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </motion.div>
                   );
                 })}
               </div>
             </div>
-          </motion.div>
+          </div>
         ))}
       </div>
     </div>

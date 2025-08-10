@@ -607,7 +607,7 @@ const Projects = () => {
               className="w-full h-48 object-cover rounded-md mb-6"
             />
             <h2
-              className="text-2xl font-bold mb-2 text-center hover-fill"
+              className="text-2xl font-bold mb-2 text-center"
               data-text={active.name}
             >
               {active.name}

@@ -208,3 +208,14 @@
   transform: scale(1.05);
   max-width: 800px;
 }
+
+@media (max-width: 768px) {
+  .about-timeline-hover-card {
+    right: 10%;
+    top: 120%;
+    transform: translateX(-50%);
+    width: 90%;
+    height: auto;
+    max-width: 350px;
+  }
+}
