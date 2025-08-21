@@ -32,7 +32,7 @@ const Footer = () => {
 
   const downloadResume = () => {
     const link = document.createElement("a");
-    link.href = "/resume.pdf";
+    link.href = "./Resume.pdf";
     link.download = "Atharv_Tyagi_Resume.pdf";
     document.body.appendChild(link);
     link.click();
